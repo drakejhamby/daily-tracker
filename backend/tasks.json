@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "title": "Clean Room",
+    "description": "make bed and vaccumm and eat",
+    "dueDate": "tuesday",
+    "priority": 1,
+    "category": "home"
+  }
+]
