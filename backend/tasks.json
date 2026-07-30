@@ -6,5 +6,50 @@
     "dueDate": "tuesday",
     "priority": 1,
     "category": "home"
+  },
+  {
+    "id": 2,
+    "title": "Test",
+    "description": "use the computer",
+    "completed": false,
+    "dueDate": "wednesday",
+    "priority": 1,
+    "category": "school"
+  },
+  {
+    "id": 3,
+    "title": "Test",
+    "description": "use the computer",
+    "completed": false,
+    "dueDate": "wednesday",
+    "priority": 1,
+    "category": "school"
+  },
+  {
+    "id": 4,
+    "title": "Test",
+    "description": "use the computer",
+    "completed": false,
+    "dueDate": "wednesday",
+    "priority": 3,
+    "category": "school"
+  },
+  {
+    "id": 5,
+    "title": "Test",
+    "description": "use the computer",
+    "completed": false,
+    "dueDate": "wednesday",
+    "priority": 10,
+    "category": "school"
+  },
+  {
+    "id": 6,
+    "title": "Test",
+    "description": "use the computer",
+    "completed": false,
+    "dueDate": "wednesday",
+    "priority": 1,
+    "category": "school"
   }
 ]

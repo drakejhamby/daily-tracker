@@ -25,13 +25,31 @@ function saveTasks(tasks) {
 // Get the tasks
 app.get('/api/tasks', (req,res) => {
     const tasks = getTasks();
+    tasks.sort((a, b) => a.priority - b.priority);
     res.json(tasks);
+});
+
+// Get only one task
+app.get('/api/tasks/:id', (req, res) => {
+    const tasks = getTasks();
+    const id = req.params.id;
+    const chosenTask = tasks.find(task => task.id === Number(id));
+
+    if (!chosenTask) {
+        return res.status(404).json({ message: 'Task not found' });
+    }
+    
+    res.json(chosenTask);
 });
 
 // Post a new task
 app.post('/api/tasks', (req, res) => {
     // 1. Get the current list of tasks
     const tasks = getTasks();
+
+    if(!req.body.title || req.body.title.trim() === '') {
+        return res.status(400).json({messsage: 'Title is required.'});
+    }
 
     // Generate the next ID
     let newId = 1;
@@ -82,14 +100,29 @@ app.put('/api/tasks/:id', (req, res) => {
     
     tasks[taskIndex] = updatedTask;
 
-    saveTasks(tasks)
+    saveTasks(tasks);
     return res.status(200).json(updatedTask);
 
 
 })
 
 // DELETE a task
+app.delete('/api/tasks/:id', (req, res) => {
+    const tasks = getTasks();
+    const id = req.params.id;
 
+    // Find the task
+    const taskIndex = tasks.findIndex(task => task.id === Number(id));
+
+    if (taskIndex === -1) {
+        return res.status(404).json({message: 'Task not found'});
+    }
+
+    tasks.splice(taskIndex, 1);
+    saveTasks(tasks);
+
+    return res.status(200).json(tasks);
+})
 
 const PORT = 5000;
 app.listen(PORT, () => {
