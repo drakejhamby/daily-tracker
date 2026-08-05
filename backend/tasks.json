@@ -51,5 +51,23 @@
     "dueDate": "wednesday",
     "priority": 1,
     "category": "school"
+  },
+  {
+    "id": 7,
+    "title": "asdf",
+    "description": "fasd",
+    "completed": false,
+    "dueDate": "2026-08-21",
+    "priority": 3,
+    "category": "Shopping"
+  },
+  {
+    "id": 8,
+    "title": "asdf",
+    "description": "fasd",
+    "completed": false,
+    "dueDate": "2026-08-21",
+    "priority": 3,
+    "category": "Shopping"
   }
 ]
