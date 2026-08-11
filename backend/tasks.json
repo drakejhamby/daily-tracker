@@ -2,72 +2,19 @@
   {
     "id": 1,
     "title": "Clean Room",
-    "description": "make bed and vaccumm and eat",
-    "dueDate": "tuesday",
-    "priority": 1,
-    "category": "home"
+    "description": "make the bed and sweep the floor",
+    "completed": false,
+    "dueDate": "2026-08-21",
+    "priority": 2,
+    "category": "Home"
   },
   {
     "id": 2,
-    "title": "Test",
-    "description": "use the computer",
+    "title": "Push ups",
+    "description": "do it!",
     "completed": false,
-    "dueDate": "wednesday",
-    "priority": 1,
-    "category": "school"
-  },
-  {
-    "id": 3,
-    "title": "Test",
-    "description": "use the computer",
-    "completed": false,
-    "dueDate": "wednesday",
-    "priority": 1,
-    "category": "school"
-  },
-  {
-    "id": 4,
-    "title": "Test",
-    "description": "use the computer",
-    "completed": false,
-    "dueDate": "wednesday",
-    "priority": 3,
-    "category": "school"
-  },
-  {
-    "id": 5,
-    "title": "Test",
-    "description": "use the computer",
-    "completed": false,
-    "dueDate": "wednesday",
-    "priority": 10,
-    "category": "school"
-  },
-  {
-    "id": 6,
-    "title": "Test",
-    "description": "use the computer",
-    "completed": false,
-    "dueDate": "wednesday",
-    "priority": 1,
-    "category": "school"
-  },
-  {
-    "id": 7,
-    "title": "asdf",
-    "description": "fasd",
-    "completed": false,
-    "dueDate": "2026-08-21",
-    "priority": 3,
-    "category": "Shopping"
-  },
-  {
-    "id": 8,
-    "title": "asdf",
-    "description": "fasd",
-    "completed": false,
-    "dueDate": "2026-08-21",
-    "priority": 3,
-    "category": "Shopping"
+    "dueDate": "2026-08-14",
+    "priority": 4,
+    "category": "Health & Fitness"
   }
 ]
