@@ -5,31 +5,31 @@ const path = require('path');
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // Needed later so we can receive JSON from React
+app.use(express.json()); // Allows the frontend to send JSON bodies for create/update requests.
 
-// Full path to the tasks file
+// file path for the JSON data store used by the app
 const tasksFilePath = path.join(__dirname, 'tasks.json');
 
-// Helper 1: Read the tasks
+// Read the current task list from disk.
 function getTasks() {
     const data = fs.readFileSync(tasksFilePath, 'utf8');
     return JSON.parse(data);
 }
 
-// Helper 2: Save the tasks
+// Write the task list back to disk after mutations.
 function saveTasks(tasks) {
     const data = JSON.stringify(tasks, null, 2);
     fs.writeFileSync(tasksFilePath, data);
 }
 
-// Get the tasks
+// Return all tasks sorted by priority so the most urgent items appear first.
 app.get('/api/tasks', (req,res) => {
     const tasks = getTasks();
     tasks.sort((a, b) => a.priority - b.priority);
     res.json(tasks);
 });
 
-// Get only one task
+// Fetch a single task by its id for detail or edit workflows.
 app.get('/api/tasks/:id', (req, res) => {
     const tasks = getTasks();
     const id = req.params.id;
@@ -42,7 +42,7 @@ app.get('/api/tasks/:id', (req, res) => {
     res.json(chosenTask);
 });
 
-// Post a new task
+// Create a new task from the frontend form data.
 app.post('/api/tasks', (req, res) => {
     // 1. Get the current list of tasks
     const tasks = getTasks();
@@ -77,12 +77,11 @@ app.post('/api/tasks', (req, res) => {
     
 })
 
-// Update an existing task
+// Update an existing task, merging in any submitted changes while keeping the id fixed.
 app.put('/api/tasks/:id', (req, res) => {
     const tasks = getTasks();
-    const id = req.params.id; // This comes from the URL
+    const id = req.params.id; // This comes from the URL.
 
-    // Find the task
     const taskIndex = tasks.findIndex(task => task.id === Number(id));
 
     if (taskIndex === -1) {
@@ -106,12 +105,11 @@ app.put('/api/tasks/:id', (req, res) => {
 
 })
 
-// DELETE a task
+// Remove a task from storage after confirming it exists.
 app.delete('/api/tasks/:id', (req, res) => {
     const tasks = getTasks();
     const id = req.params.id;
 
-    // Find the task
     const taskIndex = tasks.findIndex(task => task.id === Number(id));
 
     if (taskIndex === -1) {

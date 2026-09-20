@@ -3,6 +3,10 @@ import axios from 'axios';
 import styles from './App.module.css';
 
 function App() {
+  // Main app state:
+  // - tasks: the full list coming from the backend
+  // - form fields: values for creating a new task
+  // - edit fields: values used while editing an existing task
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -15,11 +19,10 @@ function App() {
   const [editDueDate, setEditDueDate] = useState('');
   const [editPriority, setEditPriority] = useState(1);
 
+  // Load the task list from the backend when the component first mounts.
   useEffect(() => {
-    // Fetch tasks from the backend here
     axios.get('http://localhost:5000/api/tasks')
     .then(response => {
-      // response.data is the array of tasks
       setTasks(response.data);
     })
     .catch(error => {
@@ -27,7 +30,7 @@ function App() {
     });
   }, []);
 
-  // Sending new task data to the backend
+  // Create a new task and send it to the backend.
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -54,7 +57,7 @@ function App() {
 
   }
 
-  // Function for completing tasks
+  // Toggle the completed flag for a task and update the local list.
   const handleToggleComplete = (task) => {
 
     axios.put(`http://localhost:5000/api/tasks/${task.id}`, {
@@ -71,7 +74,7 @@ function App() {
 
   }
 
-  // Function for deleting the task
+  // Remove a task from the backend and the current UI list.
   const handleDelete = (id) => {
 
     axios.delete(`http://localhost:5000/api/tasks/${id}`)
@@ -84,7 +87,7 @@ function App() {
 
   }
 
-  // Function for saving an edit
+  // Save changes made in the edit form and close edit mode.
   const handleSaveEdit = (id) => {
     axios.put(`http://localhost:5000/api/tasks/${id}`, {
       title: editTitle,
@@ -93,12 +96,10 @@ function App() {
       priority: editPriority
     })
     .then(response => {
-      // Update the task in state
       setTasks(tasks.map(t =>
         t.id === id ? response.data : t
       ));
 
-      // Exit edit mode
       setEditingId(null);
     })
     .catch(error => {
@@ -106,6 +107,7 @@ function App() {
     });
   }
 
+  // Helper functions for turning a numeric priority into a readable label and CSS style.
   const getPriorityLabel = (value) => {
     const priorityValue = Number(value) || 1;
     if (priorityValue >= 5) return 'Critical';
@@ -131,7 +133,10 @@ function App() {
     return parsedDate.toLocaleDateString();
   };
 
-  // Return statement
+  // Render the dashboard layout:
+  // - top stats summary
+  // - task list area with edit/delete actions
+  // - form for adding a new task
   return (
     <div className={styles.app}>
       <div className={`${styles.orb} ${styles.orbLeft}`} />
@@ -162,6 +167,7 @@ function App() {
             </div>
           </header>
 
+          {/* Task list section: either show an empty state or render each task card. */}
           <div className={styles.taskList}>
             {tasks.length === 0 ? (
               <div className={styles.emptyState}>
@@ -288,6 +294,7 @@ function App() {
           </div>
         </section>
 
+        {/* Panel for creating a new task and assigning its metadata. */}
         <aside className={`${styles.surface} ${styles.formPanel}`}>
           <h2 className={styles.panelTitle}>Add New Task</h2>
           <p className={styles.panelIntro}>Capture details fast, then prioritize what matters most.</p>

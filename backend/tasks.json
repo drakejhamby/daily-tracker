@@ -7,14 +7,5 @@
     "dueDate": "2026-09-20",
     "priority": 5,
     "category": "School"
-  },
-  {
-    "id": 2,
-    "title": "ewtwertwer",
-    "description": "ewrtert",
-    "completed": false,
-    "dueDate": "2026-09-17",
-    "priority": 2,
-    "category": "Personal"
   }
 ]
