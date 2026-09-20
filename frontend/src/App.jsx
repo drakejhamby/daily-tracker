@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './App.module.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -116,11 +117,11 @@ function App() {
 
   const getPriorityStyles = (value) => {
     const priorityValue = Number(value) || 1;
-    if (priorityValue >= 5) return 'bg-rose-500/15 text-rose-700 ring-rose-300';
-    if (priorityValue >= 4) return 'bg-orange-500/15 text-orange-700 ring-orange-300';
-    if (priorityValue >= 3) return 'bg-amber-500/15 text-amber-700 ring-amber-300';
-    if (priorityValue >= 2) return 'bg-emerald-500/15 text-emerald-700 ring-emerald-300';
-    return 'bg-sky-500/15 text-sky-700 ring-sky-300';
+    if (priorityValue >= 5) return styles.priorityCritical;
+    if (priorityValue >= 4) return styles.priorityHigh;
+    if (priorityValue >= 3) return styles.priorityMedium;
+    if (priorityValue >= 2) return styles.priorityLow;
+    return styles.priorityVeryLow;
   };
 
   const formatDate = (dateValue) => {
@@ -132,77 +133,77 @@ function App() {
 
   // Return statement
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_right,_#fde68a_0%,_#fef3c7_30%,_#f8fafc_70%)] text-slate-800">
-      <div className="pointer-events-none absolute -left-28 top-20 h-72 w-72 rounded-full bg-amber-300/40 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-sky-300/40 blur-3xl" />
+    <div className={styles.app}>
+      <div className={`${styles.orb} ${styles.orbLeft}`} />
+      <div className={`${styles.orb} ${styles.orbRight}`} />
 
-      <main className="relative mx-auto grid w-full max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:px-10 lg:py-12">
-        <section className="space-y-6">
-          <header className="animate-fade-up rounded-3xl border border-white/70 bg-white/75 p-6 shadow-[0_20px_65px_-40px_rgba(2,132,199,0.5)] backdrop-blur-md sm:p-8">
-            <p className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-700">
+      <main className={styles.layout}>
+        <section className={styles.taskSection}>
+          <header className={`${styles.surface} ${styles.header}`}>
+            <p className={styles.eyebrow}>
               Focus Mode
             </p>
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h1 className={styles.title}>
               Daily Tracker
             </h1>
-            <p className="mt-3 max-w-2xl text-sm text-slate-600 sm:text-base">
+            <p className={styles.intro}>
               Organize tasks with a bright, clean workflow. Track priorities, due dates, and completion status in one place.
             </p>
-            <div className="mt-5 flex flex-wrap gap-3 text-sm">
-              <span className="rounded-full bg-sky-100 px-3 py-1 font-medium text-sky-700">
+            <div className={styles.stats}>
+              <span className={`${styles.stat} ${styles.statTotal}`}>
                 {tasks.length} total tasks
               </span>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 font-medium text-emerald-700">
+              <span className={`${styles.stat} ${styles.statCompleted}`}>
                 {tasks.filter(task => task.completed).length} completed
               </span>
-              <span className="rounded-full bg-orange-100 px-3 py-1 font-medium text-orange-700">
+              <span className={`${styles.stat} ${styles.statPending}`}>
                 {tasks.filter(task => !task.completed).length} pending
               </span>
             </div>
           </header>
 
-          <div className="space-y-4">
+          <div className={styles.taskList}>
             {tasks.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-300 bg-white/75 p-8 text-center text-slate-500 shadow-sm backdrop-blur-sm">
+              <div className={styles.emptyState}>
                 No tasks yet. Add your first one to get started.
               </div>
             ) : (
               tasks.map(task => (
                 <article
                   key={task.id}
-                  className="animate-fade-up rounded-2xl border border-white/80 bg-white/90 p-5 shadow-[0_14px_40px_-28px_rgba(2,132,199,0.55)] transition hover:shadow-[0_18px_45px_-24px_rgba(14,165,233,0.4)]"
+                  className={`${styles.surface} ${styles.taskCard}`}
                 >
                   {task.id === editingId ? (
-                    <div className="space-y-4">
-                      <div className="grid gap-3 sm:grid-cols-2">
+                    <div className={styles.editForm}>
+                      <div className={styles.formGrid}>
                         <input
                           type="text"
                           value={editTitle}
                           onChange={(e) => setEditTitle(e.target.value)}
-                          className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none ring-sky-300 placeholder:text-slate-400 focus:ring-2"
+                          className={styles.input}
                         />
                         <input
                           type="text"
                           value={editDescription}
                           onChange={(e) => setEditDescription(e.target.value)}
-                          className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none ring-sky-300 placeholder:text-slate-400 focus:ring-2"
+                          className={styles.input}
                         />
                       </div>
 
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <label className="space-y-2 text-sm font-medium text-slate-600">
+                      <div className={styles.formGrid}>
+                        <label className={styles.fieldLabel}>
                           Due Date
                           <input
                             type="date"
                             value={editDueDate}
                             onChange={(e) => setEditDueDate(e.target.value) }
-                            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none ring-sky-300 focus:ring-2"
+                            className={styles.input}
                           />
                         </label>
 
-                        <div className="space-y-2 text-sm font-medium text-slate-600">
+                        <div className={styles.fieldLabel}>
                           <p>
-                            Priority: <span className="font-semibold">{Number(editPriority)}</span>
+                            Priority: <span className={styles.priorityValue}>{Number(editPriority)}</span>
                           </p>
                           <input
                             type="range"
@@ -211,21 +212,21 @@ function App() {
                             step="1"
                             value={editPriority}
                             onChange={(e) => setEditPriority(e.target.value)}
-                            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-sky-500"
+                            className={styles.range}
                           />
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-2 pt-1">
+                      <div className={styles.actions}>
                         <button
                           onClick={() => handleSaveEdit(task.id)}
-                          className="rounded-xl bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-600"
+                          className={`${styles.button} ${styles.primaryButton}`}
                         >
                           Save
                         </button>
                         <button
                           onClick={() => setEditingId(null)}
-                          className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                          className={`${styles.button} ${styles.secondaryButton}`}
                         >
                           Cancel
                         </button>
@@ -233,30 +234,30 @@ function App() {
                     </div>
                   ) : (
                     <div>
-                      <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className={styles.taskHeader}>
                         <div>
-                          <h3 className="text-lg font-semibold text-slate-900">{task.title}</h3>
-                          <p className="mt-1 text-sm text-slate-600">{task.description || 'No description provided.'}</p>
+                          <h3 className={styles.taskTitle}>{task.title}</h3>
+                          <p className={styles.description}>{task.description || 'No description provided.'}</p>
                         </div>
-                        <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ring-1 ${getPriorityStyles(task.priority)}`}>
+                        <span className={`${styles.priorityBadge} ${getPriorityStyles(task.priority)}`}>
                           {getPriorityLabel(task.priority)}
                         </span>
                       </div>
 
-                      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-medium text-slate-600">
-                        <span className="rounded-full bg-slate-100 px-3 py-1">Due: {formatDate(task.dueDate)}</span>
-                        <span className={`rounded-full px-3 py-1 ${task.completed ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                      <div className={styles.metadata}>
+                        <span className={`${styles.badge} ${styles.dueBadge}`}>Due: {formatDate(task.dueDate)}</span>
+                        <span className={`${styles.badge} ${task.completed ? styles.completedBadge : styles.pendingBadge}`}>
                           {task.completed ? 'Completed' : 'Pending'}
                         </span>
                         {task.category ? (
-                          <span className="rounded-full bg-sky-100 px-3 py-1 text-sky-700">{task.category}</span>
+                          <span className={`${styles.badge} ${styles.categoryBadge}`}>{task.category}</span>
                         ) : null}
                       </div>
 
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className={styles.actions}>
                         <button
                           onClick={() => handleToggleComplete(task)}
-                          className="rounded-xl bg-emerald-500 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
+                          className={`${styles.button} ${styles.completeButton}`}
                         >
                           {task.completed ? 'Mark Incomplete' : 'Mark Complete'}
                         </button>
@@ -268,13 +269,13 @@ function App() {
                             setEditDueDate(task.dueDate || '');
                             setEditPriority(task.priority || 1);
                           }}
-                          className="rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                          className={`${styles.button} ${styles.secondaryButton}`}
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(task.id)}
-                          className="rounded-xl bg-rose-500 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-rose-600"
+                          className={`${styles.button} ${styles.deleteButton}`}
                         >
                           Delete
                         </button>
@@ -287,17 +288,17 @@ function App() {
           </div>
         </section>
 
-        <aside className="animate-fade-up h-fit rounded-3xl border border-white/80 bg-white/90 p-6 shadow-[0_20px_65px_-38px_rgba(2,132,199,0.45)] backdrop-blur sm:p-8 lg:sticky lg:top-6">
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Add New Task</h2>
-          <p className="mt-2 text-sm text-slate-600">Capture details fast, then prioritize what matters most.</p>
+        <aside className={`${styles.surface} ${styles.formPanel}`}>
+          <h2 className={styles.panelTitle}>Add New Task</h2>
+          <p className={styles.panelIntro}>Capture details fast, then prioritize what matters most.</p>
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <form onSubmit={handleSubmit} className={styles.newTaskForm}>
             <input
               type="text"
               placeholder="Task title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm outline-none ring-sky-300 placeholder:text-slate-400 focus:ring-2"
+              className={styles.input}
             />
 
             <input
@@ -305,7 +306,7 @@ function App() {
               placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm outline-none ring-sky-300 placeholder:text-slate-400 focus:ring-2"
+              className={styles.input}
             />
 
             <input
@@ -314,7 +315,7 @@ function App() {
               list="category-list"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm outline-none ring-sky-300 placeholder:text-slate-400 focus:ring-2"
+              className={styles.input}
             />
             <datalist id="category-list">
               <option value="Work" />
@@ -329,18 +330,18 @@ function App() {
               <option value="Hobbies" />
             </datalist>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className="space-y-2 text-sm font-medium text-slate-700">
+            <div className={styles.formGrid}>
+              <label className={styles.fieldLabelDark}>
                 Due Date
                 <input
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm outline-none ring-sky-300 focus:ring-2"
+                  className={styles.input}
                 />
               </label>
 
-              <div className="space-y-2 text-sm font-medium text-slate-700">
+              <div className={styles.fieldLabelDark}>
                 <p>
                   Priority: <span className="font-semibold">{Number(priority)}</span>
                 </p>
@@ -351,14 +352,14 @@ function App() {
                   step="1"
                   value={priority}
                   onChange={(e) => setPriority(e.target.value)}
-                  className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-sky-500"
+                  className={styles.range}
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-600"
+              className={`${styles.button} ${styles.primaryButton} ${styles.fullButton}`}
             >
               Add Task
             </button>

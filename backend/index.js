@@ -48,7 +48,7 @@ app.post('/api/tasks', (req, res) => {
     const tasks = getTasks();
 
     if(!req.body.title || req.body.title.trim() === '') {
-        return res.status(400).json({messsage: 'Title is required.'});
+        return res.status(400).json({message: 'Title is required.'});
     }
 
     // Generate the next ID

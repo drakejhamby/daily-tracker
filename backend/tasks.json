@@ -1,20 +1,20 @@
 [
   {
     "id": 1,
-    "title": "Clean Room",
-    "description": "make the bed and sweep the floor",
+    "title": "I need to study",
+    "description": "Study for 3 hours",
     "completed": false,
-    "dueDate": "2026-08-21",
-    "priority": 2,
-    "category": "Home"
+    "dueDate": "2026-09-20",
+    "priority": 5,
+    "category": "School"
   },
   {
     "id": 2,
-    "title": "Push ups",
-    "description": "do it!",
+    "title": "ewtwertwer",
+    "description": "ewrtert",
     "completed": false,
-    "dueDate": "2026-08-14",
-    "priority": 4,
-    "category": "Health & Fitness"
+    "dueDate": "2026-09-17",
+    "priority": 2,
+    "category": "Personal"
   }
 ]
