@@ -25,7 +25,7 @@ function saveTasks(tasks) {
 // Return all tasks sorted by priority so the most urgent items appear first.
 app.get('/api/tasks', (req,res) => {
     const tasks = getTasks();
-    tasks.sort((a, b) => a.priority - b.priority);
+    tasks.sort((a, b) => Number(b.priority || 1) - Number(a.priority || 1));
     res.json(tasks);
 });
 

@@ -44,7 +44,7 @@ function App() {
 
     axios.post('http://localhost:5000/api/tasks', newTask)
     .then(response => {
-      setTasks([...tasks, response.data]); // add the new task to the list
+      setTasks([...tasks, response.data].sort((a, b) => Number(b.priority || 1) - Number(a.priority || 1)));
       setTitle('');
       setDescription('');
       setDueDate('');
