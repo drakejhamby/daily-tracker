@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "title": "I need to study",
-    "description": "Study for 3 hours",
+    "title": "Clean my room",
+    "description": "make the bed and sweep",
     "completed": false,
-    "dueDate": "2026-09-20",
-    "priority": 5,
-    "category": "School"
+    "dueDate": "2026-09-22",
+    "priority": 2,
+    "category": "Home"
   }
 ]
